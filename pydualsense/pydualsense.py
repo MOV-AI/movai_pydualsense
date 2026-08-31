@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 from sys import platform
+import time
 
 if platform.startswith("win32") and sys.version_info >= (3, 8):
     os.environ["PATH"] += os.pathsep + os.path.dirname(__file__)
@@ -259,12 +260,13 @@ class pydualsense:  # noqa: N801
                     logger.debug(inReport)
                 # decrypt the packet and bind the inputs
                 self.readInput(inReport)
-
+                
+                time.sleep(0.001) # 1 ms
                 # prepare new report for device
-                outReport = self.prepareReport()
+                # outReport = self.prepareReport()
 
                 # write the report to the device
-                self.writeReport(outReport)
+                # self.writeReport(outReport)
             except IOError:
                 self.connected = False
                 break
